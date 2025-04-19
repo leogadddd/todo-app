@@ -1,6 +1,6 @@
 # City of Gold Technical Exam
 
-This repository contains the solution for the City of Gold technical Assesment.
+This repository is for the City of Gold technical Assesment.
 
 ## How to Run
 
