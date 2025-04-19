@@ -1,11 +1,6 @@
-import {
-  createRecord,
-  getRecords,
-  updateRecord,
-  deleteRecord,
-} from "./db/database";
+import { createRecord, getRecords } from "./db/database";
 
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { UserType } from "./types";
 
 const saltRounds = 10;

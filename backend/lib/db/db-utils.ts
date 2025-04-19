@@ -33,10 +33,10 @@ export const createUserTable = async (pool: Pool) => {
 
 // Create the Database
 export const createDatabase = async () => {
-  const connection = await mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "1234",
+  const connection = mysql.createPool({
+    host: process.env.DB_HOST || "localhost",
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     port: 3306,
   });
 

@@ -4,6 +4,9 @@ import axios from "axios";
 
 const TodoContext = createContext<TodoContextType | undefined>(undefined);
 
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
   const [isLoading, setIsLoading] = useState(true);
   const [todos, setTodos] = useState<TodoType[]>([]);
@@ -18,7 +21,7 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       setIsLoading(true);
-      const res = await axios.get<APIResponse>("http://localhost:3001/todos", {
+      const res = await axios.get<APIResponse>(BACKEND_URL + "/todos", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -59,7 +62,7 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       const res = await axios.post<APIResponse>(
-        "http://localhost:3001/todos",
+        BACKEND_URL + "/todos",
         newTodo,
         {
           headers: {
@@ -94,7 +97,7 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
 
     try {
       axios
-        .delete(`http://localhost:3001/todos/${id}`, {
+        .delete(`${BACKEND_URL}/todos/${id}`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -128,7 +131,7 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
     setTodos((prev) => prev.map((t) => (t.id === id ? updatedTodo : t)));
 
     try {
-      await axios.put(`http://localhost:3001/todos/${id}`, updatedTodo, {
+      await axios.put(`${BACKEND_URL}/todos/${id}`, updatedTodo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -157,7 +160,7 @@ export const TodoProvider = ({ children }: { children: React.ReactNode }) => {
     setTodos((prev) => prev.map((t) => (t.id === id ? updatedTodo : t)));
 
     try {
-      await axios.put(`http://localhost:3001/todos/${id}`, updatedTodo, {
+      await axios.put(`${BACKEND_URL}/todos/${id}`, updatedTodo, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

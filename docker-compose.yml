@@ -1,0 +1,49 @@
+services:
+  mysql:
+    image: mysql:8.4
+    container_name: mysql
+    restart: always
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - mynetwork
+    environment:
+      MYSQL_ROOT_PASSWORD: password
+
+  backend:
+    build: ./backend
+    container_name: app-backend
+    depends_on:
+      - mysql
+    ports:
+      - "5000:5000"
+    networks:
+      - mynetwork
+    environment:
+      PORT: 5000
+      DB_HOST: mysql
+      DB_USER: root
+      DB_PASSWORD: password
+      DB_PORT: 3306
+      JWT_SECRET: cityofgold
+
+  frontend:
+    build: ./frontend
+    container_name: app-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    environment:
+      REACT_APP_BACKEND_URL: http://localhost:5000
+    networks:
+      - mynetwork
+
+volumes:
+  mysql_data:
+
+networks:
+  mynetwork:
+    driver: bridge

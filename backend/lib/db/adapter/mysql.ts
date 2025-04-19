@@ -15,9 +15,9 @@ interface DatabaseAdapter {
 
 // MySQL connection pool
 const pool = mysql.createPool({
-  host: "localhost",
-  user: "root",
-  password: "1234",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
   database: "todo-app",
   port: 3306,
 });

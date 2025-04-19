@@ -1,6 +1,9 @@
 import axios from "axios";
 import React, { useState } from "react";
 
+const BACKEND_URL =
+  process.env.REACT_APP_BACKEND_URL || "http://localhost:5000";
+
 const AuthPage = () => {
   const [isSignup, setIsSignup] = useState(false);
 
@@ -33,7 +36,7 @@ const LoginForm = ({ onToggle }: LoginFormProps) => {
     const password = (event.target as HTMLFormElement).password.value;
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/login", {
+      const response = await axios.post(BACKEND_URL + "/auth/login", {
         username,
         password,
       });
@@ -54,6 +57,9 @@ const LoginForm = ({ onToggle }: LoginFormProps) => {
         alert(error.response.data.message);
         return;
       }
+
+      alert("An error occurred during login. Please try again.");
+      console.error("Login error:", error);
     }
   };
 
@@ -130,7 +136,7 @@ const SignupForm = ({ onToggle }: SignupFormProps) => {
     }
 
     try {
-      const response = await axios.post("http://localhost:3001/auth/register", {
+      const response = await axios.post(BACKEND_URL + "/auth/register", {
         username,
         password,
       });
